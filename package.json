@@ -1,0 +1,26 @@
+{
+  "name": "jnschmdt",
+  "version": "0.0.0",
+  "description": "Monorepo for all project related to jnschmdt.de and jnschmdt.dev",
+  "repository": "git@github.com:angertitan/jnschmdt",
+  "author": "Jan Schmidt <me@jnschmdt.de>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "ws": "yarn workspace"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.8.2",
+    "@typescript-eslint/parser": "^4.8.2",
+    "eslint": "^7.14.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-import-resolver-typescript": "^2.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.1.2",
+    "typescript": "^4.1.2"
+  }
+}
