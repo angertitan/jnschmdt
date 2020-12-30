@@ -1,5 +1,5 @@
 {
-	"extends": ["../.eslintrc", "plugin:react/recommended", "plugin:react-hooks/recommended"],
+	"extends": ["../../.eslintrc", "plugin:react/recommended", "plugin:react-hooks/recommended"],
 	"rules": {
 		// suppress errors for missing 'import React' in files
 		"react/react-in-jsx-scope": "off",

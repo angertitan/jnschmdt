@@ -82,31 +82,38 @@ export async function getServerSideProps(): Promise<{ props: IndexProps }> {
 	const index = getRandomIndex(0, AVAIABLE_LANG.length);
 	const { flagID, translatorID } = AVAIABLE_LANG[index];
 
-	const translateResponse = await axios({
-		baseURL: translatorBaseURL,
-		url: '/translate',
-		method: 'post',
-		headers: {
-			'Ocp-Apim-Subscription-Key': process.env.API_KEY,
-			'Ocp-Apim-Subscription-Region': process.env.API_LOC,
-			'Content-type': 'application/json'
-		},
-		params: {
-			'api-version': '3.0',
-			from: 'de',
-			to: translatorID
-		},
-		data: [
-			{
-				text: DEFAULT_GREETING
-			}
-		],
-		responseType: 'json'
-	});
+	let greeting;
+	try {
+		const translateResponse = await axios({
+			baseURL: translatorBaseURL,
+			url: '/translate',
+			method: 'post',
+			headers: {
+				'Ocp-Apim-Subscription-Key': process.env.API_KEY,
+				'Ocp-Apim-Subscription-Region': process.env.API_LOC,
+				'Content-type': 'application/json'
+			},
+			params: {
+				'api-version': '3.0',
+				from: 'de',
+				to: translatorID
+			},
+			data: [
+				{
+					text: DEFAULT_GREETING
+				}
+			],
+			responseType: 'json'
+		});
 
-	let greeting = translateResponse.data[0].translations[0].text as string;
-	if (translateResponse.status !== 200) {
-		greeting = DEFAULT_GREETING;
+		greeting = translateResponse.data[0].translations[0].text as string;
+	} catch (error) {
+		return {
+			props: {
+				greeting: DEFAULT_GREETING,
+				flag: DEFAULT_FLAG
+			}
+		};
 	}
 
 	const flagResponse = await axios({
@@ -115,11 +122,7 @@ export async function getServerSideProps(): Promise<{ props: IndexProps }> {
 		responseType: 'text'
 	});
 
-	let flag = flagResponse.data;
-
-	if (flagResponse.status !== 200) {
-		flag = DEFAULT_FLAG;
-	}
+	const flag = flagResponse.data;
 
 	return {
 		props: {
